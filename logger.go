@@ -94,7 +94,7 @@ func Init(name string, verbose, systemLog bool, logFile io.Writer) *Logger {
 		eLogs = append(eLogs, el)
 	}
 	// Windows services don't have stdout/stderr. Writes will fail, so try them last.
-	if logFile.(*os.File) != os.Stderr {
+	if se, ok := logFile.(*os.File); ok && se != os.Stderr {
 		eLogs = append(eLogs, os.Stderr)
 	}
 	if verbose {
